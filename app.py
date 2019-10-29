@@ -10,14 +10,12 @@ app.debug = True
 
 @app.route('/')
 def index():
-    return u'テスト'
+    return "aaaaa"
 
 
 @app.route('/hello/<name>')
 def hello(name=''):
-    if name == '':
-       name = u'ななしさん'
-    return render_template('hello.html', name=name)
+    return "aaaa"
 
 
 @app.route('/debug')
