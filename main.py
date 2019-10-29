@@ -11,14 +11,14 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/',methods=["GET","POST"])
+@app.route('/', methods=["GET", "POST"])
 def index():
     if request.method == "GET":
         return "GET method is not available."
 
     elif request.method == "POST":
 
-        #Init Layout
+        # Init Layout
         docWidth = 1000
         docHeight = 1408
         xMargin = 50
@@ -30,36 +30,41 @@ def index():
         xCount = 3
         yCount = 5
 
-        #Get
+        # Get
         response = make_response()
         reqImage = Image.open(BytesIO(request.get_data()))
         frame = Image.open("frame"+request.headers.get("frame")+".png")
 
-        #Make Image
+        # Make Image
         img = Image.new('RGB', (docWidth, docHeight), (255, 255, 255))
         (reqW, reqH) = reqImage.size
         reqNewWidth = int(imgHeight/reqH*reqW)
-        reqImage = reqImage.resize((reqNewWidth,int(imgHeight)))
+        reqImage = reqImage.resize((reqNewWidth, int(imgHeight)))
         (frameW, frameH) = frame.size
         frameNewWidth = int(imgHeight/frameH*frameW)
-        frame = frame.resize((frameNewWidth,int(imgHeight)))
-        #crop
-        reqImage = reqImage.crop(((reqNewWidth - imgWidth)/2,0,imgWidth + (reqNewWidth - imgWidth)/2,imgHeight))
-        frame = frame.crop(((frameNewWidth - imgWidth)/2,0,imgWidth + (frameNewWidth - imgWidth)/2,imgHeight))
+        frame = frame.resize((frameNewWidth, int(imgHeight)))
+        # crop
+        reqImage = reqImage.crop(
+            ((reqNewWidth - imgWidth)/2, 0, imgWidth + (reqNewWidth - imgWidth)/2, imgHeight))
+        frame = frame.crop(((frameNewWidth - imgWidth)/2, 0,
+                           imgWidth + (frameNewWidth - imgWidth)/2, imgHeight))
 
         for x in range(xCount):
             for y in range(yCount):
                 leftTopX = xMargin + x * (xSep + imgWidth)
                 leftTopY = yMargin + y * (ySep + imgHeight)
-                img.paste(reqImage,(leftTopX,leftTopY))
-                img.paste(frame, (leftTopX,leftTopY),frame)
+                img.paste(reqImage, (leftTopX, leftTopY))
+                img.paste(frame, (leftTopX, leftTopY), frame)
 
-        #Submmit
+        # Submmit
         buf = BytesIO()
         img.save(buf, 'png')
         response = make_response(buf.getvalue())
         response.headers["Content-type"] = "image/png"
         response.headers["Content-Disposition"] = "attachment;filename=\"image.png\""
+        response.headers.add('Access-Control-Allow-Origin', '*')
+  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Custom-Header')
+  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
         return response
 
     return "error"
