@@ -8,7 +8,7 @@ from flask import *
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, support_credentials=True)
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -65,7 +65,7 @@ def index():
         response.headers.add('Access-Control-Allow-Origin', '*')
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Custom-Header')
         response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-        response.headers.add('Access-Control-Allow-Credentials', 'true')
+        response.headers.add('Access-Control-Allow-Credentials', "true")
         return response
 
     return "error"
