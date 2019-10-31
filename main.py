@@ -21,12 +21,12 @@ def index():
         # Init Layout
         docWidth = 1000
         docHeight = 1480
-        xMargin = 50
-        yMargin = 135
-        xSep = 30
-        ySep = 40
-        imgWidth = 280
-        imgHeight = 210
+        xMargin = 70
+        yMargin = 155
+        xSep = 70
+        ySep = 80
+        imgWidth = 240
+        imgHeight = 170
         xCount = 3
         yCount = 5
 
