@@ -37,7 +37,7 @@ def index():
         icon = Image.open("logo.png")
 
         # Make Image
-        img = Image.new('RGB', (docWidth, docHeight), (255, 255, 255))
+        img = Image.new('RGB', (docWidth, docHeight), (200, 200, 200))
         (reqW, reqH) = reqImage.size
         reqNewWidth = int(imgHeight/reqH*reqW)
         reqImage = reqImage.resize((reqNewWidth, int(imgHeight)),Image.BICUBIC)
